@@ -38,27 +38,33 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .authorizeHttpRequests((authorize) ->
-                        authorize
-                                .requestMatchers("/login","/logout","/api/auth/login").permitAll()
-                                .requestMatchers("/dueno/**").hasAnyRole("ASISTENTE", "ADMINISTRADOR", "MEDICO")
-                                .anyRequest().authenticated()
-                )            
-                .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
-                    .defaultSuccessUrl("/home", true)
-                    .failureUrl("/login?error=true")
-                    .and()
-                .logout()
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/login?logout=true")
-                    .permitAll()
-                    .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .and()
-                .authenticationProvider(authenticationProvider());
+            .csrf().disable()
+            .authorizeHttpRequests((authorize) ->
+                authorize
+                    .requestMatchers("/login", "/logout", "/api/auth/login").permitAll()
+                    .requestMatchers("/api/**").authenticated() // Protege endpoints de API
+                    .requestMatchers("/dueno/**").hasAnyRole("ASISTENTE", "ADMINISTRADOR", "MEDICO")
+                    .requestMatchers("/mascota/**").hasAnyRole("ASISTENTE", "ADMINISTRADOR", "MEDICO")
+                    .requestMatchers("/atencion/**").hasAnyRole("ASISTENTE", "ADMINISTRADOR", "MEDICO")
+                    .requestMatchers("/medico/**").hasAnyRole("ASISTENTE", "ADMINISTRADOR", "MEDICO")
+                    .anyRequest().authenticated()
+            )
+            .formLogin(form -> form
+                .loginPage("/login")
+                .permitAll()
+                .defaultSuccessUrl("/home", true)
+                .failureUrl("/login?error=true")
+            )
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout=true")
+                .permitAll()
+            )
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) //sesión para vistas
+            )
+            .authenticationProvider(authenticationProvider())
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // JWT solo para API
 
         return http.build();
     }
