@@ -53,8 +53,9 @@ public class AtencionService {
     
     //  para buscar todas las atenciones en un dia sin considerar las horas
     public List<Atencion> findByFechaProximaRevision(LocalDate fecha) {
-        LocalDateTime startOfDay = fecha.atStartOfDay(); // 2024-10-10 00:00
-        LocalDateTime endOfDay = fecha.atTime(LocalTime.MAX); // 2024-10-10 23:59:59.999
+        LocalDateTime startOfDay = fecha.atStartOfDay(); // 2024-08-29 00:00
+        LocalDateTime endOfDay = fecha.atTime(LocalTime.MAX); // 2024-08-29 23:59:59.999
         return atencionRepository.findByFechaProximaRevisionBetween(startOfDay, endOfDay);
     }
+
 }
