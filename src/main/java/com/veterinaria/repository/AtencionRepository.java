@@ -1,5 +1,8 @@
 package com.veterinaria.repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,4 +19,6 @@ public interface AtencionRepository extends JpaRepository<Atencion, Long> {
 
     // Encuentra todas las atenciones por tipo de atención
     List<Atencion> findByTipoAtencionId(Long tipoAtencionId);
+    
+    List<Atencion> findByFechaProximaRevisionBetween(LocalDateTime startDateTime, LocalDateTime endDateTime);
 }

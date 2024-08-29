@@ -31,7 +31,6 @@ public class TipoAtencionService {
         tipoAtencionRepository.deleteById(id);
     }
 
-    // Método para obtener todos los tipos de atención ordenados por descripción ascendente
     public List<TipoAtencion> obtenerTiposDeAtencionOrdenados() {
         return tipoAtencionRepository.findAllByOrderByDescripcionAsc();
     }

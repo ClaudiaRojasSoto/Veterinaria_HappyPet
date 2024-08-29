@@ -1,5 +1,8 @@
 package com.veterinaria.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,5 +49,12 @@ public class AtencionService {
         } else {
             return atencionRepository.findAll();
         }
+    }
+    
+    //  para buscar todas las atenciones en un dia sin considerar las horas
+    public List<Atencion> findByFechaProximaRevision(LocalDate fecha) {
+        LocalDateTime startOfDay = fecha.atStartOfDay(); // 2024-10-10 00:00
+        LocalDateTime endOfDay = fecha.atTime(LocalTime.MAX); // 2024-10-10 23:59:59.999
+        return atencionRepository.findByFechaProximaRevisionBetween(startOfDay, endOfDay);
     }
 }
