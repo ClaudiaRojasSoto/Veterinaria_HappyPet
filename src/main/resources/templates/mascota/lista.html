@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Mascotas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div th:insert="fragments/navmenu :: navmenu"></div>
+    
+    <div class="container mt-4">
+        <h2 class="mb-4">Lista de Mascotas</h2>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Raza</th>
+                    <th>Dueño</th>
+                    <th>Género</th>
+                    <th>Tipo de Mascota</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="mascota : ${mascotas}">
+                    <td th:text="${mascota.nombre}">Nombre de la Mascota</td>
+                    <td th:text="${mascota.raza}">Raza</td>
+                    <td th:text="${mascota.dueno.nombre + ' ' + mascota.dueno.apellido}">Nombre del Dueño</td>
+                    <td th:text="${mascota.genero.descripcion}">Género</td>
+                    <td th:text="${mascota.tipoMascota.descripcion}">Tipo de Mascota</td>
+                    <td>
+                        <a th:href="@{/mascota/editar/{id}(id=${mascota.id})}" class="btn btn-warning btn-sm">Editar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="/mascota/registro" class="btn btn-primary">Registrar Nueva Mascota</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

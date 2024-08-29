@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Mascota</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div th:insert="fragments/navmenu :: navmenu"></div>
+    
+<div class="container mt-5">
+    <h1 class="mb-4">Editar Mascota</h1>
+    <form th:action="@{/mascota/editar}" th:object="${mascota}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
+        </div>
+        <div class="mb-3">
+            <label for="raza" class="form-label">Raza:</label>
+            <input type="text" class="form-control" id="raza" th:field="*{raza}" required>
+        </div>
+        <div class="mb-3">
+            <label for="dueno" class="form-label">Dueño:</label>
+            <select class="form-select" id="dueno" th:field="*{duenoId}" required>
+                <option th:each="dueno : ${duenos}" th:value="${dueno.id}" th:text="${dueno.nombre} + ' ' + ${dueno.apellido}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="genero" class="form-label">Género:</label>
+            <select class="form-select" id="genero" th:field="*{generoId}" required>
+                <option th:each="genero : ${generos}" th:value="${genero.id}" th:text="${genero.descripcion}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="tipoMascota" class="form-label">Tipo de Mascota:</label>
+            <select class="form-select" id="tipoMascota" th:field="*{tipoMascotaId}" required>
+                <option th:each="tipo : ${tiposMascota}" th:value="${tipo.id}" th:text="${tipo.descripcion}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
