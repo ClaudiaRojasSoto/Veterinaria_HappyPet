@@ -26,7 +26,6 @@ public class InventarioApiController {
     public ResponseEntity<List<InventarioDTO>> getInventarioBySucursal(@PathVariable Long sucursalId) {
         List<Inventario> inventarios = inventarioService.findBySucursalId(sucursalId);
         
-        // Convertir las entidades Inventario a InventarioDTO usando ModelMapper
         List<InventarioDTO> inventarioDTOs = inventarios.stream()
             .map(inventario -> modelMapper.map(inventario, InventarioDTO.class))
             .collect(Collectors.toList());

@@ -55,7 +55,7 @@
             <tbody>
 			    <tr th:each="atencion : ${atenciones}">
 			        <td th:text="${atencion.sucursal.nombre}"></td>
-			        <td th:text="${atencion.medico.nombre}"></td> <!-- Cambiado a medico.nombre -->
+			        <td th:text="${atencion.medico.nombre}"></td>
 			        <td th:text="${atencion.tipoAtencion.descripcion}"></td>
 			        <td th:text="${atencion.mascota.nombre}"></td>
 			        <td th:text="${atencion.mascota.dueno.nombre}"></td>
